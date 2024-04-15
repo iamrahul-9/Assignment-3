@@ -1,0 +1,22 @@
+steps:
+  # Docker Build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+            'build',
+            '-t',
+            'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:${SHORT_SHA}',
+            '-t',
+            'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:latest',
+            '--cache-from',
+            'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:latest',
+            '.'
+          ]
+
+  # Docker push to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push',  'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:${SHORT_SHA}']
+
+# Store images in Google Artifact Registry 
+images:
+  - northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:${SHORT_SHA}
+  - northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:latest
