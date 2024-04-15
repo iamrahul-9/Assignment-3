@@ -14,7 +14,7 @@ steps:
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:${SHORT_SHA}']
+    args: ['push',  'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact']
 
 # Store images in Google Artifact Registry 
 images:
