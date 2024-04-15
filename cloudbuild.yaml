@@ -4,23 +4,25 @@ steps:
     args: [
             'build',
             '-t',
-            'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:${SHORT_SHA}',
-            '-t',
-            'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:latest',
-            '--cache-from',
-            'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:latest',
+            'gcr.io/rahul-lab/flaskapp:${SHORT_SHA}',
             '.'
           ]
 
-  # Docker push to Google Artifact Registry
+  # Docker push to Google Container Registry (GCR)
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact']
+    args: ['push',  'gcr.io/rahul-lab/flaskapp:${SHORT_SHA}']
 
-# Store images in Google Artifact Registry 
-images:
-  - northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:${SHORT_SHA}
-  - northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:latest
-
-options:
-  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
-
+  # Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+            'run',
+            'deploy',
+            'flaskapp',
+            '--image',
+            'gcr.io/rahul-lab/flaskapp:${SHORT_SHA}',
+            '--region',
+            'northamerica-northeast2 ',
+            '--platform',
+            'managed',
+            '--allow-unauthenticated' # Optional, depending on your authentication requirements
+          ]
