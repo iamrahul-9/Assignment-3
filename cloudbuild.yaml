@@ -24,7 +24,7 @@ steps:
             'northamerica-northeast2 ',
             '--platform',
             'managed',
-            '--allow-unauthenticated' # Optional, depending on your authentication requirements
+            '--allow-unauthenticated', # Optional, depending on your authentication requirements
             '--api-endpoint-override=https://northamerica-northeast2-run.googleapis.com/'
           ]
 options:
