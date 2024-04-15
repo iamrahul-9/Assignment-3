@@ -20,3 +20,6 @@ steps:
 images:
   - northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:${SHORT_SHA}
   - northamerica-northeast2-docker.pkg.dev/rahul-lab/gupta-flaskapp-artifact:latest
+
+options:
+  default_logs_bucket_behavior: SKIP
